@@ -10,7 +10,6 @@ Aplicación Django para llevar control de pedidos de pizza 🍕
 ## Dependencias
 
 - Django
-- tinydb
 
 ## Instalación
 
