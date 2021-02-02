@@ -1,10 +1,8 @@
+<h1>Bienvenido a Pizza Ucab</h1>
 
-{% if orders_list %}
-    <ul>
-        {% for order in orders_list %}
-            <li><a href="#">Orden de {{ order.client }}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p>No hay ordenes.</p>
-{% endif %}
+<button><a style="text-decoration: none;" href="order/">Hacer un pedido</a></button>
+<button><a style="text-decoration: none;" href="orders/">Listado de ventas</a></button>
+<button><a style="text-decoration: none;" href="orders-by-date/">Ventas por dia</a></button>
+<button><a style="text-decoration: none;" href="orders-by-size/">Ventas por tamaño de pizza</a></button>
+<button><a style="text-decoration: none;" href="orders-by-topping/">Ventas por ingredientes</a></button>
+<button><a style="text-decoration: none;" href="order-by-client/">Ventas por clientes</a></button>

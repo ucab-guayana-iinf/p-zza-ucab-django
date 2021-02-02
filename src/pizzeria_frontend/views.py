@@ -4,13 +4,16 @@ from django.urls import reverse
 from django.forms import formset_factory
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
+from django.db.models import Count
+from django.db.models.functions import TruncDay
 
 from .models import Order, Pizza, Topping
 from .forms import PizzaForm, MultiplePizzaForm, OrderForm, PizzaFormset
 
 def index(request):
-    # return HttpResponse("Hola")
-    return redirect('order/')
+    context = {}
+    return render(request, 'pizzeria_frontend/index.html', context)
+    # return redirect('order/')
 
 # Vista para hacer un pedido usando vista generica
 class OrderCreateView(CreateView):
@@ -41,38 +44,63 @@ class OrderCreateView(CreateView):
     def get_success_url(self):
         return reverse(reverse('order-detail', args=(self.object.id,)))
 
-# def pizza_order_view(request):
-#     clicked = False
-#     topping_list = Topping.objects.all()
-#     pizza_form = PizzaForm(request.POST or None)
-#     order_form = OrderForm(request.POST or None)
+class OrderDetailView(generic.DetailView):
+    model = Order
+    template_name = 'pizzeria_frontend/detail.html'
 
-#     if pizza_form.is_valid() and order_form.is_valid():
-#         clicked = True
-#         # form.save()
-#         print(request.POST)
-#         pizza_form = PizzaForm() # para limpiar el form al finalizar
-#         order_form = OrderForm()
-#     elif order_form.is_valid():
-#         print(request.POST)
-
-#     context = {
-#         'pizza_form': pizza_form,
-#         'order_form': order_form,
-#         'topping_list': topping_list,
-#         'clicked': clicked
-#     }
-#     return render(request, 'pizzeria_frontend/pizza_create.html', context)
-
-class IndexView(generic.ListView):
-    template_name = 'pizzeria_frontend/index.html'
+class OrdersView(generic.ListView):
+    template_name = 'pizzeria_frontend/orders.html'
     context_object_name = 'orders_list'
 
     def get_queryset(self):
         """Return orders."""
-        return Order.objects.all
+        return Order.objects.order_by('-id')
 
-class OrderDetailView(generic.DetailView):
-    model = Order
-    template_name = 'pizzeria_frontend/detail.html'
-    
+class OrdersByDateView(generic.ListView):
+    template_name = 'pizzeria_frontend/orders_by_date.html'
+    context_object_name = 'orders_list'
+
+    def get_queryset(self):
+        print(Order.objects
+            .annotate(day=TruncDay('date'))  
+            .values('day')                          
+            .annotate(count=Count('id'))                  
+        )
+        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+        # print(Order.objects.extra(select={'day': 'date( date )'}).values('day').annotate(available=Count('date')))
+
+class OrdersBySizeView(generic.ListView):
+    template_name = 'pizzeria_frontend/orders_by_date.html'
+    context_object_name = 'orders_list'
+
+    def get_queryset(self):
+        print(Order.objects
+            .annotate(day=TruncDay('date'))  
+            .values('day')                          
+            .annotate(count=Count('id'))                  
+        )
+        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+
+class OrdersByToppingView(generic.ListView):
+    template_name = 'pizzeria_frontend/orders_by_date.html'
+    context_object_name = 'orders_list'
+
+    def get_queryset(self):
+        print(Order.objects
+            .annotate(day=TruncDay('date'))  
+            .values('day')                          
+            .annotate(count=Count('id'))                  
+        )
+        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+
+class OrdersByClientView(generic.ListView):
+    template_name = 'pizzeria_frontend/orders_by_date.html'
+    context_object_name = 'orders_list'
+
+    def get_queryset(self):
+        print(Order.objects
+            .annotate(day=TruncDay('date'))  
+            .values('day')                          
+            .annotate(count=Count('id'))                  
+        )
+        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 

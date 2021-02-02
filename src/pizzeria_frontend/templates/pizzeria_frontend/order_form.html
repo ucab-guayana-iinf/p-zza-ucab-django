@@ -1,24 +1,3 @@
-<!-- <h1>TEST ORDEN</h1>
-{{ pizzas.management_form }}
-
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <h2>Pizzas</h2>
-    {% for pizza in pizzas %}
-        <table class='no_error'>
-            {{ pizza.as_table }}
-        </table>
-    {% endfor %}
-    {{ pizzas.as_p }}
-    <input type="button" value="Add More" id="add_more">
-    <input type="submit" value="Ordenar">
-</form>
- <script>
-    $('#add_more').click(function() {
-        cloneMore('div.table:last', 'service');
-    });
-</script> -->
-
 <h3>Ingrese los datos de su orden</h3>
 <form method="POST">
     {% csrf_token %}
