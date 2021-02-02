@@ -55,7 +55,7 @@ class OrdersView(generic.ListView):
     context_object_name = 'orders_list'
 
     def get_queryset(self):
-        """Return orders."""
+        """Retorna todas las ordenes."""
         return Order.objects.order_by('-id')
 
 # Vista para mostrar el recuento de ventas por fecha
@@ -64,6 +64,7 @@ class OrdersByDateView(generic.ListView):
     context_object_name = 'orders_list'
 
     def get_queryset(self):
+        """Retorna todas las ordenes agrupadas por dia."""
         return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
 
 # Vista para mostrar el recuento de ventas por tamaño
@@ -72,6 +73,7 @@ class OrdersBySizeView(generic.ListView):
     context_object_name = 'sizes_list'
 
     def get_queryset(self):
+        """Retorna todos los tamaños con sus relaciones de pizzas."""
         return Size.objects.all()
 
 # Vista para mostrar el recuento de ventas por topping
@@ -80,6 +82,7 @@ class OrdersByToppingView(generic.ListView):
     context_object_name = 'toppings_list'
 
     def get_queryset(self):
+        """Retorna todos los toppings con sus relaciones de pizzas."""
         return Topping.objects.all()
 
 # Vista para mostrar el recuento de ventas por cliente
@@ -88,4 +91,5 @@ class OrdersByClientView(generic.ListView):
     context_object_name = 'orders_list'
 
     def get_queryset(self):
+        """Retorna todas las ordenes agrupadas por cliente."""
         return Order.objects.values('client').annotate(count=Count('id')).order_by('-count')
