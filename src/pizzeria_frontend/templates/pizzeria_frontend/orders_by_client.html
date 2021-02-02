@@ -1,9 +1,9 @@
-<h1>Lista de órdenes por día</h1>
+<h1>Recuento de ventas por cliente</h1>
 {% if orders_list %}
     <ul>
         {% for order in orders_list %}
             <li>
-                <p>{{ order.day }}: <strong>{{ order.count }}</strong> órdenes</p>
+                <p>{{ order.client }}: Ha realizado <strong>{{ order.count }}</strong> órdenes</p>
             </li>
             <br>
         {% endfor %}

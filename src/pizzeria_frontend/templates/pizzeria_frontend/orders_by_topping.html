@@ -1,9 +1,9 @@
-<h1>Lista de órdenes por día</h1>
-{% if orders_list %}
+<h1>Recuento de ventas por topping</h1>
+{% if toppings_list %}
     <ul>
-        {% for order in orders_list %}
+        {% for topping in toppings_list %}
             <li>
-                <p>{{ order.day }}: <strong>{{ order.count }}</strong> órdenes</p>
+                <p>{{ topping.name }}: <strong>{{ topping.pizza_set.count }}</strong> pizzas vendidas</p>
             </li>
             <br>
         {% endfor %}

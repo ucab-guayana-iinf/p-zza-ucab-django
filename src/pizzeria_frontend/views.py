@@ -73,24 +73,14 @@ class OrdersBySizeView(generic.ListView):
 
 class OrdersByToppingView(generic.ListView):
     template_name = 'pizzeria_frontend/orders_by_topping.html'
-    context_object_name = 'orders_list'
+    context_object_name = 'toppings_list'
 
     def get_queryset(self):
-        print(Order.objects
-            .annotate(day=TruncDay('date'))  
-            .values('day')                          
-            .annotate(count=Count('id'))                  
-        )
-        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+        return Topping.objects.all()
 
 class OrdersByClientView(generic.ListView):
     template_name = 'pizzeria_frontend/orders_by_client.html'
     context_object_name = 'orders_list'
 
     def get_queryset(self):
-        print(Order.objects
-            .annotate(day=TruncDay('date'))  
-            .values('day')                          
-            .annotate(count=Count('id'))                  
-        )
-        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+        return Order.objects.values('client').annotate(count=Count('id')).order_by('-count')
