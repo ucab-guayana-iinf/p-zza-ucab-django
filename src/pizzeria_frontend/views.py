@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 
-from .models import Order, Pizza, Topping
+from .models import Order, Pizza, Topping, Size
 from .forms import PizzaForm, MultiplePizzaForm, OrderForm, PizzaFormset
 
 def index(request):
@@ -38,7 +38,7 @@ class OrderCreateView(CreateView):
             pizzasFormset.instance = self.object # sets the parent object instance (associates pizza to order)
             pizzasFormset.save()
             # super().form_valid(form) esto envia a get_success_url
-            return HttpResponseRedirect(reverse('order-detail', args=(self.object.id,)))
+            return HttpResponseRedirect(reverse('pizzeria_frontend:order-detail', args=(self.object.id,)))
 
     # si no se define esto el default se redirige al object.get_absolute_url()
     def get_success_url(self):
@@ -61,28 +61,18 @@ class OrdersByDateView(generic.ListView):
     context_object_name = 'orders_list'
 
     def get_queryset(self):
-        print(Order.objects
-            .annotate(day=TruncDay('date'))  
-            .values('day')                          
-            .annotate(count=Count('id'))                  
-        )
         return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
         # print(Order.objects.extra(select={'day': 'date( date )'}).values('day').annotate(available=Count('date')))
 
 class OrdersBySizeView(generic.ListView):
-    template_name = 'pizzeria_frontend/orders_by_date.html'
-    context_object_name = 'orders_list'
+    template_name = 'pizzeria_frontend/orders_by_size.html'
+    context_object_name = 'sizes_list'
 
     def get_queryset(self):
-        print(Order.objects
-            .annotate(day=TruncDay('date'))  
-            .values('day')                          
-            .annotate(count=Count('id'))                  
-        )
-        return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
+        return Size.objects.all()
 
 class OrdersByToppingView(generic.ListView):
-    template_name = 'pizzeria_frontend/orders_by_date.html'
+    template_name = 'pizzeria_frontend/orders_by_topping.html'
     context_object_name = 'orders_list'
 
     def get_queryset(self):
@@ -94,7 +84,7 @@ class OrdersByToppingView(generic.ListView):
         return Order.objects.annotate(day=TruncDay('date')).values('day').annotate(count=Count('id')) 
 
 class OrdersByClientView(generic.ListView):
-    template_name = 'pizzeria_frontend/orders_by_date.html'
+    template_name = 'pizzeria_frontend/orders_by_client.html'
     context_object_name = 'orders_list'
 
     def get_queryset(self):

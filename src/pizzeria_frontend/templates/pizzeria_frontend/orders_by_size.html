@@ -1,0 +1,13 @@
+<h1>Recuento de ventas por tamaño de pizza</h1>
+{% if sizes_list %}
+    <ul>
+        {% for size in sizes_list %}
+            <li>
+                <p>{{ size.name }}: <strong>{{ size.pizza_set.count }}</strong> pizzas vendidas</p>
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <h1>No se han realizado ordenes.</h1>
+{% endif %}
