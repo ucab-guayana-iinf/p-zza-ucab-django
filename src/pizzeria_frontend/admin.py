@@ -7,7 +7,7 @@ class ItemAdmin(admin.ModelAdmin):
 class PizzaAdmin(admin.ModelAdmin):
     list_display = ['id', 'size', 'price', 'order']
 
-class PizzaInline(admin.StackedInline):
+class PizzaInline(admin.TabularInline):
     model = Pizza
     extra = 1
 

@@ -5,9 +5,21 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Order, Pizza
+from .forms import PizzaForm
 
 # def index(request):
 #     return HttpResponse("Hola")
+
+def pizza_create_view(request):
+    form = PizzaForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = PizzaForm() # para limpiar el form al finalizar
+
+    context = {
+        'form': form
+    }
+    return render(request, 'pizzeria_frontend/pizza_create.html', context)
 
 class IndexView(generic.ListView):
     template_name = 'pizzeria_frontend/index.html'
