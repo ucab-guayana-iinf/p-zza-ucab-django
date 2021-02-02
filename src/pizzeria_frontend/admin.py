@@ -5,7 +5,8 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price']
 
 class PizzaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'size', 'price', 'order', 'pizza_price']
+    list_display = ['id', 'size', 'order', 'pizza_price']
+    list_filter = ['size']
 
 class PizzaInline(admin.TabularInline):
     model = Pizza
@@ -13,15 +14,10 @@ class PizzaInline(admin.TabularInline):
     exclude = ['price']
 
 class OrderAdmin(admin.ModelAdmin):
-    # readonly_fields = ['date']
-    # fieldsets = [
-    #     (None, {'fields': ['client', 'price']}),
-        # ('Fecha de publicación', {'fields': ['pub_date'], 'classes': ['collapseXDDDDDDDD']}),
-    # ]
-    inlines = [PizzaInline]
-    list_display = ['id', 'client', 'total', 'order_price', 'date']
+    list_display = ['id', 'client', 'order_price', 'date']
+    list_filter = ['date', 'client']
     exclude = ['total']
-    # list_filter = ['pub_date']
+    inlines = [PizzaInline]
     # search_fields = ['question_text']
 
 admin.site.register(Topping, ItemAdmin)

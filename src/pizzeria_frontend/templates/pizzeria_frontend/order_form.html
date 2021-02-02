@@ -1,8 +1,13 @@
 <h3 style="text-align: center;">Ingrese los datos de su orden</h3>
+
 <form method="POST">
     {% csrf_token %}
+    <!-- Formulario del nombre del cliente -->
     {{ form.as_p }}
+
     {{ pizzas.management_form }}
+    
+    <!-- Formularios de las pizzas -->
     {% for pizzaForm in pizzas.forms %}
         <div class='table'>
             <table class='no_error'>

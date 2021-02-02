@@ -35,9 +35,8 @@ class OrderCreateView(CreateView):
         pizzasFormset = context["pizzas"]
         self.object = form.save() # guarda el objeto padre (orden)
         if pizzasFormset.is_valid():
-            pizzasFormset.instance = self.object # asocia cada pizza a la orden
-            pizzasFormset.save()
-            # super().form_valid(form) esto envia a get_success_url
+            pizzasFormset.instance = self.object # asocia cada pizza a la orden recien creada
+            pizzasFormset.save() # guarda las pizzas en la bd
             return HttpResponseRedirect(reverse('pizzeria_frontend:order-detail', args=(self.object.id,)))
 
     # si no se define esta funcion el default se redirige al object.get_absolute_url()
