@@ -1,4 +1,4 @@
-<h1>Detalle de la orden</h1>
+<h1 style="text-align: center;">Detalle de la orden</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -16,6 +16,8 @@
     {% else %}
         <p><strong>Pizza {{ pizza.size.name }}</strong> sin toppings</p>
     {% endif %}
+    <p><strong>Precio de la pizza:</strong> {{ pizza.pizza_price }}</p>
+    <p>----------------------------------------</p>
 {% endfor %}
 
 <p><strong>Costo Total:</strong> {{ order.order_price }}</p>
