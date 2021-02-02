@@ -20,7 +20,7 @@
 </script> -->
 
 <h3>Ingrese los datos de su orden</h3>
-<form method="post">
+<form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     {{ pizzas.management_form }}

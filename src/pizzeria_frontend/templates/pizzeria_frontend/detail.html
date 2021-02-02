@@ -1,12 +1,23 @@
-<h1>{{ order }}</h1>
+<h1>Detalle de la orden</h1>
 
-<!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id }}">
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
-    <input type="submit" value="Votar">
-</form> -->
+<h2>Orden #{{ order.id }}</h2>
+<p><strong>Nombre del cliente:</strong> {{ order.client }}</p>
+<p><strong>Fecha de realización:</strong> {{ order.date }}</p>
+<h3>Resumen de la orden:</h3>
+
+{% for pizza in order.pizza_set.all %}
+    {% if pizza.toppings.all.count %}
+        <p><strong>Pizza {{ pizza.size.name }}</strong> con:</p>
+        {% for topping in pizza.toppings.all %}
+            <p>{{ topping.name }}</p>
+        {% endfor %}
+    {% else %}
+        <p><strong>Pizza {{ pizza.size.name }}</strong> sin toppings</p>
+    {% endif %}
+{% endfor %}
+
+<p><strong>Costo Total:</strong> {{ order.order_price }}</p>
+
+<button><a style="text-decoration: none;" href="/">Regresar al inicio</a></button>
