@@ -1,0 +1,58 @@
+<!-- <h1>TEST ORDEN</h1>
+{{ pizzas.management_form }}
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <h2>Pizzas</h2>
+    {% for pizza in pizzas %}
+        <table class='no_error'>
+            {{ pizza.as_table }}
+        </table>
+    {% endfor %}
+    {{ pizzas.as_p }}
+    <input type="button" value="Add More" id="add_more">
+    <input type="submit" value="Ordenar">
+</form>
+ <script>
+    $('#add_more').click(function() {
+        cloneMore('div.table:last', 'service');
+    });
+</script> -->
+
+<h3>Ingrese los datos de su orden</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ pizzas.management_form }}
+    {% for pizzaForm in pizzas.forms %}
+        <div class='table'>
+            <table class='no_error'>
+                {{ pizzaForm.as_table }}
+            </table>
+        </div>
+    {% endfor %}
+    <input type="button" value="Agregar Pizza" id="add_more">
+    <input type="submit" value="Ordenar">
+</form>
+
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script>
+    $('#add_more').click(function() {
+        var selector = 'div.table:last';
+        var type = 'pizza_set';
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + type + '-TOTAL_FORMS').val();
+        newElement.find(':input').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        newElement.find('label').each(function() {
+            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+            $(this).attr('for', newFor);
+        });
+        total++;
+        $('#id_' + type + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+    });
+</script>

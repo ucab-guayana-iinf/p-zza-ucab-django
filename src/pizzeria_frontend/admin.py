@@ -5,11 +5,12 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'price']
 
 class PizzaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'size', 'price', 'order']
+    list_display = ['id', 'size', 'price', 'order', 'pizza_price']
 
 class PizzaInline(admin.TabularInline):
     model = Pizza
     extra = 1
+    exclude = ['price']
 
 class OrderAdmin(admin.ModelAdmin):
     # readonly_fields = ['date']
@@ -18,7 +19,8 @@ class OrderAdmin(admin.ModelAdmin):
         # ('Fecha de publicación', {'fields': ['pub_date'], 'classes': ['collapseXDDDDDDDD']}),
     # ]
     inlines = [PizzaInline]
-    list_display = ['id', 'client', 'total', 'date']
+    list_display = ['id', 'client', 'total', 'order_price', 'date']
+    exclude = ['total']
     # list_filter = ['pub_date']
     # search_fields = ['question_text']
 

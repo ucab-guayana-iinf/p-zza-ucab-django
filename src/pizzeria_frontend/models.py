@@ -19,39 +19,33 @@ class Topping(models.Model):
         return f'{self.name} ({self.price})'
 
 class Order(models.Model):
-    client = models.CharField(max_length=100)
-    total = models.DecimalField(decimal_places=2, max_digits=10)
-    date = models.DateField(auto_now_add=True)
+    client = models.CharField('Cliente', max_length=100)
+    total = models.DecimalField(decimal_places=2, max_digits=10, default=0)
+    date = models.DateField('Fecha', auto_now_add=True)
+
+    @property
+    def order_price(self):
+        price = 0
+        for pizza in self.pizza_set.all():
+            price += pizza.pizza_price
+        return price
 
     def __str__(self):
         return f'Orden {self.id} - {self.client} - {self.total} - {self.date}'
 
 class Pizza(models.Model):
-    size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    price = models.DecimalField(decimal_places=2, max_digits=10)
-    toppings = models.ManyToManyField(Topping, blank=True)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, verbose_name="Tamaño")
+    price = models.DecimalField(decimal_places=2, max_digits=10, default=0)
+    toppings = models.ManyToManyField(Topping, blank=True, verbose_name="Ingredientes")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Orden")
 
-    def __str__(self):
-        return f'Pizza {self.size}'
-
-    def calculate_pizza_price(self):
+    @property
+    def pizza_price(self):
         price = 0
         price += self.size.price
         for topping in self.toppings.all():
             price += topping.price
+        return price
 
-    # def save(self, *args, **kwargs):
-    #     if not Pizza.objects.filter(id=self.id):
-    #         super(Pizza, self).save(*args, **kwargs)
-    #     else:
-    #         price = Decimal('0.00')
-    #         if self.size:
-    #             price = self.size.price
-
-    #         for topping in self.toppings.all():
-    #             if topping.price:
-    #                 price = price + topping.price
-
-    #         self.price = Decimal(str(price)).quantize(quant)
-    #         super(Pizza, self).save(*args, **kwargs)
+    def __str__(self):
+        return f'Pizza {self.size}'
