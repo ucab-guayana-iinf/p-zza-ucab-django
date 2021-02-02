@@ -1,0 +1,10 @@
+
+{% if orders_list %}
+    <ul>
+        {% for order in orders_list %}
+            <li><a href="#">Orden de {{ order.client }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No hay ordenes.</p>
+{% endif %}
