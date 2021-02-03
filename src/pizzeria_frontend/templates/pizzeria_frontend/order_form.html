@@ -6,7 +6,7 @@
   <img class="banner" src="/static/images/project_logo.png" />
 </div>
 
-<h3 style="text-align: center">Ingrese los datos de su orden</h3>
+<h1 style="text-align: center">Ingrese los datos de su orden</h1>
 
 <form method="POST">
   {% csrf_token %}
@@ -21,8 +21,10 @@
     </table>
   </div>
   {% endfor %}
-  <input type="button" value="Agregar Pizza" id="add_more" />
-  <input type="submit" value="Ordenar" />
+  <div style="align-items: center; justify-content: center; display: flex; margin-top: 15px;">
+    <input class="button text" type="button"  value="Agregar Pizza" id="add_more" />
+    <input class="button text" type="submit"  value="Ordenar" />
+  </div>
 </form>
 
 <script
