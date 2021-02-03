@@ -1,25 +1,27 @@
-<h1 style="text-align: center;">Detalle de la orden</h1>
+<h1 style="text-align: center">Detalle de la orden</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
 
 <h2>Orden #{{ order.id }}</h2>
 <p><strong>Nombre del cliente:</strong> {{ order.client }}</p>
 <p><strong>Fecha de realización:</strong> {{ order.date }}</p>
 <h3>Resumen de la orden:</h3>
 
-{% for pizza in order.pizza_set.all %}
-    {% if pizza.toppings.all.count %}
-        <p><strong>Pizza {{ pizza.size.name }}</strong> con:</p>
-        {% for topping in pizza.toppings.all %}
-            <p>{{ topping.name }}</p>
-        {% endfor %}
-    {% else %}
-        <p><strong>Pizza {{ pizza.size.name }}</strong> sin toppings</p>
-    {% endif %}
-    <p><strong>Precio de la pizza:</strong> {{ pizza.pizza_price }}</p>
-    <p>----------------------------------------</p>
+{% for pizza in order.pizza_set.all %} {% if pizza.toppings.all.count %}
+<p><strong>Pizza {{ pizza.size.name }}</strong> con:</p>
+{% for topping in pizza.toppings.all %}
+<p>{{ topping.name }}</p>
+{% endfor %} {% else %}
+<p><strong>Pizza {{ pizza.size.name }}</strong> sin toppings</p>
+{% endif %}
+<p><strong>Precio de la pizza:</strong> {{ pizza.pizza_price }}</p>
+<p>----------------------------------------</p>
 {% endfor %}
 
 <p><strong>Costo Total:</strong> {{ order.order_price }}</p>
 
-<button><a style="text-decoration: none;" href="/">Regresar al inicio</a></button>
+<button>
+  <a style="text-decoration: none" href="/">Regresar al inicio</a>
+</button>

@@ -1,15 +1,27 @@
-<h1 style="text-align: center;">Listado de órdenes</h1>
+<head>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<div>
+  <img class="banner" src="/static/images/project_logo.png" />
+</div>
+
+<h1 style="text-align: center">Listado de órdenes</h1>
 {% if orders_list %}
-    <ul>
-        {% for order in orders_list %}
-            <li>
-                <a href="{% url 'pizzeria_frontend:order-detail' order.id %}" style="text-decoration: none;">
-                {{ order.id }}. Orden de {{ order.client }} realizada el {{ order.date|date:"d-m-y" }}
-                </a>
-            </li>
-            <br>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <h1>No se han realizado ordenes.</h1>
+<ul>
+  {% for order in orders_list %}
+  <li>
+    <a
+      href="{% url 'pizzeria_frontend:order-detail' order.id %}"
+      style="text-decoration: none"
+    >
+      {{ order.id }}. Orden de {{ order.client }} realizada el {{
+      order.date|date:"d-m-y" }}
+    </a>
+  </li>
+  <br />
+  {% endfor %}
+</ul>
+{% else %}
+<h1>No se han realizado ordenes.</h1>
 {% endif %}

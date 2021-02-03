@@ -1,42 +1,55 @@
-<h3 style="text-align: center;">Ingrese los datos de su orden</h3>
+<head>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<div>
+  <img class="banner" src="/static/images/project_logo.png" />
+</div>
+
+<h3 style="text-align: center">Ingrese los datos de su orden</h3>
 
 <form method="POST">
-    {% csrf_token %}
-    <!-- Formulario del nombre del cliente -->
-    {{ form.as_p }}
+  {% csrf_token %}
+  <!-- Formulario del nombre del cliente -->
+  {{ form.as_p }} {{ pizzas.management_form }}
 
-    {{ pizzas.management_form }}
-    
-    <!-- Formularios de las pizzas -->
-    {% for pizzaForm in pizzas.forms %}
-        <div class='table'>
-            <table class='no_error'>
-                {{ pizzaForm.as_table }}
-            </table>
-        </div>
-    {% endfor %}
-    <input type="button" value="Agregar Pizza" id="add_more">
-    <input type="submit" value="Ordenar">
+  <!-- Formularios de las pizzas -->
+  {% for pizzaForm in pizzas.forms %}
+  <div class="table">
+    <table class="no_error">
+      {{ pizzaForm.as_table }}
+    </table>
+  </div>
+  {% endfor %}
+  <input type="button" value="Agregar Pizza" id="add_more" />
+  <input type="submit" value="Ordenar" />
 </form>
 
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script
+  type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+></script>
 <script>
-    $('#add_more').click(function() {
-        var selector = 'div.table:last';
-        var type = 'pizza_set';
-        var newElement = $(selector).clone(true);
-        var total = $('#id_' + type + '-TOTAL_FORMS').val();
-        newElement.find(':input').each(function() {
-            var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-            var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-        });
-        newElement.find('label').each(function() {
-            var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
-            $(this).attr('for', newFor);
-        });
-        total++;
-        $('#id_' + type + '-TOTAL_FORMS').val(total);
-        $(selector).after(newElement);
+  $("#add_more").click(function () {
+    var selector = "div.table:last";
+    var type = "pizza_set";
+    var newElement = $(selector).clone(true);
+    var total = $("#id_" + type + "-TOTAL_FORMS").val();
+    newElement.find(":input").each(function () {
+      var name = $(this)
+        .attr("name")
+        .replace("-" + (total - 1) + "-", "-" + total + "-");
+      var id = "id_" + name;
+      $(this).attr({ name: name, id: id }).val("").removeAttr("checked");
     });
+    newElement.find("label").each(function () {
+      var newFor = $(this)
+        .attr("for")
+        .replace("-" + (total - 1) + "-", "-" + total + "-");
+      $(this).attr("for", newFor);
+    });
+    total++;
+    $("#id_" + type + "-TOTAL_FORMS").val(total);
+    $(selector).after(newElement);
+  });
 </script>
