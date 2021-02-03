@@ -11,12 +11,11 @@
 <ul>
   {% for order in orders_list %}
   <li>
-    <a
-      href="{% url 'pizzeria_frontend:order-detail' order.id %}"
+    <a 
+      href="{% url 'pizzeria_frontend:order-detail' order.id %}" 
       style="text-decoration: none"
     >
-      {{ order.id }}. Orden de {{ order.client }} realizada el {{
-      order.date|date:"d-m-y" }}
+      {{ order.id }}. Orden de {{ order.client }} realizada el {{order.date|date:"d-m-y" }}
     </a>
   </li>
   <br />
