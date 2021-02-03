@@ -59,6 +59,17 @@ p {
   text-align: center;
 }
 
+li {
+  text-align:center;
+}
+
+a {
+  font-size: 16px;
+  font-family: sans-serif;
+  text-align: center;
+  color: black
+}
+
 .table {
   display: flex;
   justify-content: center;

@@ -13,7 +13,7 @@
   <li>
     <p>
       {{ size.name }}: <strong>{{ size.pizza_set.count }}</strong> pizzas
-      vendidas
+      vendida{{ size.pizza_set.count|pluralize }}
     </p>
   </li>
   <br />

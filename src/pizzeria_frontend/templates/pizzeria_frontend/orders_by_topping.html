@@ -12,8 +12,8 @@
   {% for topping in toppings_list %}
   <li>
     <p>
-      {{ topping.name }}: <strong>{{ topping.pizza_set.count }}</strong> pizzas
-      vendidas
+      {{ topping.name }}: <strong>{{ topping.pizza_set.count }}</strong> 
+      pizza{{topping.pizza_set.count|pluralize}} vendida{{topping.pizza_set.count|pluralize}}
     </p>
   </li>
   <br />
